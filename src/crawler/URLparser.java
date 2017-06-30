@@ -10,8 +10,7 @@ import org.jsoup.select.Elements;
 public class URLparser {
 	private String url;
 	private String priceParserTag = "span[itemprop=\"price\"]";
-	private String priceParserTag2 = "div[itemprop=\"price\"]";
-
+	
 	public static ArrayList<Element> productListParser(String searchUrl) throws IOException{
 		Document doc = Jsoup.connect(searchUrl).get();
 		Elements certainLinks = doc.select("a[href]:contains(antelope)");

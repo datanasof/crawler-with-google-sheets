@@ -1,4 +1,4 @@
-package main;
+package googleSheetsManager;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -61,7 +61,7 @@ public class GsheetsService {
      */
     public static Credential authorize() throws IOException {
         // Load client secrets.
-        InputStream in = GsheetsService.class.getResourceAsStream("/client_secret.json");
+        InputStream in = GsheetsService.class.getResourceAsStream(Credentials.clientSecret);
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 

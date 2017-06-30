@@ -29,16 +29,16 @@ public enum ProductList {
 		private final String main;
 		private final String second;
 		private final String abbr;
-		public final String[] unmatch; 
+		public final String[] unmatch = new String[] {"bundle","b-stock","bag","rack", "used"}; 
 	
 	  ProductList(String main, String second, String abbr) {
 	    this.main = main;
 	    this.second = second;
 	    this.abbr = abbr;
-	    this.unmatch = new String[] {"bundle","b-stock","bag","rack"};
+	    //this.unmatch = new String[] {"bundle","b-stock","bag","rack"};
 	  }
 	
-	  public String getText() {
+	  private String getText() {
 		  if(this.abbr.equals("plus")){
 			  String abbr = "+";
 			  return this.main+this.second+abbr;
@@ -46,43 +46,45 @@ public enum ProductList {
 	    return this.main+this.second+this.abbr;
 	  }
 	  
-	  public static String buildPatternString(String[] matchString){
-		  StringBuilder sb = new StringBuilder(10);
+	  private static String matchPatternString(String[] matchString){
+		  StringBuilder sb = new StringBuilder(5);
 		  for(String match: matchString){
 			  String added = String.format("(?=.*%s)", match);
 			  sb.append(added);
 		  }		  
-		  return sb.toString();
-	  }
-	
-	  public static String fromString(String text) {
-		  String finalProduct = null;
-		 		  
-	    for (ProductList product : ProductList.values()) {
-	      if (text.contains(product.main) && text.contains(product.second) && text.contains(product.abbr) && !text.contains("b-stock") && !text.contains("bundle")) {
-	        finalProduct = product.getText();
-	      }
-	    }
-	    return finalProduct;
+		  return sb.toString();		  
 	  }
 	  
-	public static String fromString2(String text) {
+	  private static String unmatchPatternString(String[] unmatchString){
+		  StringBuilder sb = new StringBuilder(10);
+		  sb.append("("); 
+		  for(int i=0; i<unmatchString.length-1; i++){
+			  String added = String.format("%s|", unmatchString[i]);
+			  sb.append(added);
+		  }		 
+		  sb.append(unmatchString[unmatchString.length-1]+")"); 
+		  return sb.toString();
+	  }
+	  
+	public static String fromString(String text) {
 		String finalProduct = null;		
 		
 		for (ProductList product : ProductList.values()) {
 			String[] productName = new String[]{product.main.toLowerCase(),product.second.toLowerCase(),product.abbr.toLowerCase()};
-			Pattern matches = Pattern.compile(buildPatternString(productName));
-			Pattern unmatches = Pattern.compile(buildPatternString(product.unmatch));
-			if (matches.matcher(text.toLowerCase()).find()) {
+			Pattern matches = Pattern.compile(matchPatternString(productName));
+			Pattern unmatches = Pattern.compile(unmatchPatternString(product.unmatch));
+			if (matches.matcher(text.toLowerCase()).find() && !unmatches.matcher(text.toLowerCase()).find()) {
 				finalProduct = product.getText();							
 			}			
 		}
-		return finalProduct;
+		return finalProduct;		
 	}
+	
+	
+	
 	  public static void main(String[] args) {
-		  String text = "Antelope zen Audio Studio PortableplusInterface B-stock ";
-		  System.out.println(ProductList.fromString2(text));
-		  
+		  String text = "Antelope zen Audio Studio PortableplusInterface use ";
+		  System.out.println(ProductList.fromString(text));		 
 		
 	  }
 	  
