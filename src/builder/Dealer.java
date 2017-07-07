@@ -1,14 +1,13 @@
-package main;
+package builder;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Dealer {
 	private String dealerName;
 	private String webLink;
-	private ArrayList<ArrayList<Object>> products;
+	private List<Product> products;
 	
-	public Dealer(){
-		
+	public Dealer(){		
 	}
 	
 	public Dealer(String dealerName, String webLink){
@@ -32,11 +31,11 @@ public class Dealer {
 		this.webLink = webLink;
 	}
 
-	public ArrayList<ArrayList<Object>> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(ArrayList<ArrayList<Object>> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}	
 

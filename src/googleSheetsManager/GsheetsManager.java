@@ -23,4 +23,12 @@ public class GsheetsManager {
 	public void addSheet(String spreadsheetId, String nameOfSheet){
 		GsheetsService.addSheet(service, spreadsheetId, nameOfSheet);
 	}
+	
+	/**public static void main(String[] args) throws IOException {
+		String spreadsheetId = Credentials.reportSpreadsheetId;
+		String range = "Thomann!A2:E5";
+		GsheetsManager manager = new GsheetsManager();
+		manager.readSheet(spreadsheetId, range);
+		
+	}**/
 }

@@ -7,20 +7,19 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import googleSheetsManager.Credentials;
+
 public class URLparser {
-	private String url;
-	private String priceParserTag = "span[itemprop=\"price\"]";
-	
 	public static ArrayList<Element> productListParser(String searchUrl) throws IOException{
 		Document doc = Jsoup.connect(searchUrl).get();
 		Elements certainLinks = doc.select("a[href]:contains(antelope)");
 		return certainLinks;		
 	}
 		
-	public static String priceParser(String url, String priceParserTag) throws IOException{	
+	public static String priceParser(String url) throws IOException{	
 		String price;
 		Document doc = Jsoup.connect(url).get();
-		Element span = doc.select(priceParserTag).first();
+		Element span = doc.select(Credentials.priceParserTag).first();
 		if(span != null) {
 			price = span.text();
 		} else price = "";
@@ -35,22 +34,22 @@ public class URLparser {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		String searchUrl = "https://www.bax-shop.co.uk/products/search?filters[order]=score&filters[price][min]=0&filters[price][max]=6100&filters[q]=antelope&grid=grid&p=1";		
-		String forprice = "https://www.thomann.de/de/antelope_goliath_hd.htm?ref=search_rslt_antelope_414445_23";
+		String searchUrl = "https://www.thomann.de/de/search_dir.html?sw=antelope&ls=50";		
+		String forprice = "http://www.soundtools.fi/verkkokauppa/uutuudet/antelope-audio-zen-tour-thunderbolt-ja-usb-portable-audio-io-info";
 		String priceParserTag = "span[itemprop=\"price\"]";
+		DeviceList dlist = new DeviceList();
 		
 		ArrayList<Element> test = URLparser.productListParser(searchUrl);
 		for (Element x: test){
-			System.out.println(ProductList.fromString(x.text())+": "+x.attr("href"));
-			//System.out.println(x.attr("href"));
-		}
-	/**	ArrayList<Element> test2 = URLparser.testParser();
-		for (Element x: test2){
+			String name = dlist.getNameFromStr(x.text());
+			System.out.println(name+": "+x.attr("href"));
 			System.out.println(x.text());
-		}**/
-		String price = URLparser.priceParser(forprice, priceParserTag);
+			
+		}
+	
+		String price = URLparser.priceParser(forprice);
 		System.out.println(price);
-		System.out.println(URLparser.priceEditor("6.995,00 ˆ"));
+		
 	}
 
 }
