@@ -2,6 +2,10 @@ package builder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import googleSheetsManager.Credentials;
 
 public class Product {
 
@@ -13,19 +17,21 @@ public class Product {
 	private String updated;
 	private String photos;
 	private String videos;
+	private String recommended;
 	
 	public Product (){		
 	}
 	
-	public Product(String productName,String webLink,String description, String fxInfo, String price, String updated){
+	public Product(String productName,String webLink,String description, String fxInfo, String price){
 		this.productName = productName;
 		this.webLink = webLink;
 		this.description = description;
 		this.fxInfo = fxInfo;
 		this.price = price;
-		this.updated = updated;
+		this.updated = "";
 		this.photos = "";
 		this.videos = "";
+		this.recommended="";
 	}
 
 	public String getProductName() {
@@ -72,11 +78,11 @@ public class Product {
 		return updated;
 	}
 
-	public void setUpdated() {
+	public String setUpdated() {
 		LocalDateTime time = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		String formattedString = time.format(formatter);
-		this.updated = formattedString;
+		return time.format(formatter);
+		
 	}
 
 	public String getPhotos() {
@@ -94,5 +100,25 @@ public class Product {
 	public void setVideos(String videos) {
 		this.videos = videos;
 	}
+
+	public String getRecommended() {
+		return recommended;
+	}
+
+	public void setRecommended(String recommended) {
+		this.recommended = recommended;
+	}	
+	
+	public List<Object> getGsheetRow(){
+		List<Object> productRow = new ArrayList<Object>();
+		productRow.add(productName);
+		productRow.add(webLink);
+		productRow.add(description);
+		productRow.add(fxInfo);
+		productRow.add(price);
+		
+		return productRow;		
+	}
+	
 	
 }

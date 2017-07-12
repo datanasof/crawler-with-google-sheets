@@ -53,8 +53,18 @@ public class ProductDescription {
 		return null;
 	}
 	
+	private String qualifyPoints(int points){
+		String result = null;
+		if(points >= 70) result = "good";
+		else if(points >= 45) result = "ok";
+		else if(points >= 10) result = "poor";
+		else result = "not present";
+				
+		return result;
+	}
+	
 	//added description qualification method (string type, string link) return good/ok/not enough
-	public Integer qualifyDescription(String type, String url) throws IOException{
+	public String qualifyDescription(String type, String url) throws IOException{
 		int qualified = 0;
 		String htmlString = Jsoup.connect(url).get().toString().toLowerCase();
 		Map<String, Integer> wordpoints = getValuesByType(type);
@@ -64,19 +74,14 @@ public class ProductDescription {
 				qualified += entry.getValue();							
 			}	    
 		}		
-		return qualified;
+		return qualifyPoints(qualified);
 	}
 	
-	public Integer qualifyFX(String url) throws IOException{
+	public String qualifyFX(String url) throws IOException{
 		return qualifyDescription("fx", url);
 	}
 	
 	//added FX descr. qualification method (string type, string link) return good/ok/not enough
 	
-	public static void main(String[] args) throws IOException {
-		String searchUrl = "https://www.bax-shop.nl/externe-audio-interface/antelope-audio-zen-studio-thunderbolt-usb-audio-interface";		
-		ProductDescription product = new ProductDescription();		
-		System.out.println(product.qualifyDescription("thunderbolt interface", searchUrl) + "; " + product.qualifyFX(searchUrl));				
-	}
-	
+		
 }

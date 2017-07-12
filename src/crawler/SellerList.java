@@ -44,10 +44,4 @@ public class SellerList {
 		return slist;
 	}
 	
-	public static void main(String[] args) throws IOException {
-		SellerList s = new SellerList();
-		for(Seller sell: s.getList()){
-			System.out.println(sell.getName()+" ; "+sell.getSearchLink());
-		}
-	}
 }

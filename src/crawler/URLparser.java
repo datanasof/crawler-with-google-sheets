@@ -33,23 +33,5 @@ public class URLparser {
 		return newPrice;
 	}
 	
-	public static void main(String[] args) throws IOException {
-		String searchUrl = "https://www.thomann.de/de/search_dir.html?sw=antelope&ls=50";		
-		String forprice = "http://www.soundtools.fi/verkkokauppa/uutuudet/antelope-audio-zen-tour-thunderbolt-ja-usb-portable-audio-io-info";
-		String priceParserTag = "span[itemprop=\"price\"]";
-		DeviceList dlist = new DeviceList();
-		
-		ArrayList<Element> test = URLparser.productListParser(searchUrl);
-		for (Element x: test){
-			String name = dlist.getNameFromStr(x.text());
-			System.out.println(name+": "+x.attr("href"));
-			System.out.println(x.text());
-			
-		}
 	
-		String price = URLparser.priceParser(forprice);
-		System.out.println(price);
-		
-	}
-
 }

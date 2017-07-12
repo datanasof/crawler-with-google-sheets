@@ -56,33 +56,25 @@ public class DeviceList {
 		return productList;
 	}
 	
-	public String getNameFromStr(String text) {
-		String finalProduct = null;		
-		String input = text;
+	public String[] getProductInfoFromStr(String input) {
+		String name = null;	
+		String type = null;
+		String[] deviceInfo = new String[2];
 		
+				
 		try{input=input.substring(0,40);		
 		} catch(Exception e){}
 		
-		for (Device product : productList) {			
-			Pattern matches = Pattern.compile(product.getSearchString());					
+		for (Device device : productList) {			
+			Pattern matches = Pattern.compile(device.getSearchString());					
 			if (matches.matcher(input.toLowerCase()).find() && !unmatches.matcher(input.toLowerCase()).find()) {
-				finalProduct = product.getName();							
+				name = device.getName();		
+				type = device.getType();
+				deviceInfo = new String[]{name, type};
 			}				
 		}		
-		return finalProduct;		
+		return deviceInfo;		
 	}
 	
-	public static void main(String[] args) throws IOException {
-		DeviceList dlist = new DeviceList();
-		/**for(Device d:dlist.getProductList()){
-			if(d.getType().equals("unmatch")){
-				System.out.println(d.getUnmatchPattern() +" ; "+d.getType());
-			} else
-			System.out.println(d.getSearchPattern()+" ; "+d.getType());
-		}**/
-		String text = "Antelope OCX HD Master Clock 4th generation Acoustically Focused Clocking (AFC) jitter management Algorithmus Samplerates von bis zu 768 kHz ?ber W";
-		
-		System.out.println(dlist.getNameFromStr(text) + dlist.getUnmatch());		 
-	}
-
+	
 }

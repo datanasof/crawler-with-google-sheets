@@ -47,9 +47,5 @@ public class Description {
 		return wordsPoints;
 	}
 	
-	public static void main(String[] args) {
-		Description d = new Description("th int","clock,usb,analog,channel,input,db,interface,thunderbolt,mic,output,i/o,fpga,monitor,madi","14,10,9,8,8,7,6,6,5,5,5,11,3,3");
-		System.out.println(d.getType()+d.getWordsPoints());
-	}
-
+	
 }

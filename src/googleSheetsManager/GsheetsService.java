@@ -105,7 +105,8 @@ public class GsheetsService {
                 .execute();
     }
     
-    public static void addSheet(Sheets service, String spreadsheetId, String nameOfSheet){
+    public static boolean addSheet(Sheets service, String spreadsheetId, String nameOfSheet){
+    	
     	List<Request> requests = new ArrayList<>();
 	    requests.add(new Request().setAddSheet(new AddSheetRequest()
                 .setProperties(new SheetProperties().setTitle(nameOfSheet))));
@@ -115,7 +116,8 @@ public class GsheetsService {
         	service.spreadsheets().batchUpdate(spreadsheetId, body).execute();
         	
         } catch(Exception e){
-        	System.out.printf("Sheet \"%s\" exsists..", nameOfSheet);
+        	return false;
         }
+        return true;
     }
 }
